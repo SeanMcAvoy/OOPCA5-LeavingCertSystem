@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CourseDaoInterface
 {
-    public List<Course> findAllCourse() throws DaoException;
+    public List<Course> findAllCourses() throws DaoException;
+    public Course findCourseByID(String id) throws DaoException;
 }
