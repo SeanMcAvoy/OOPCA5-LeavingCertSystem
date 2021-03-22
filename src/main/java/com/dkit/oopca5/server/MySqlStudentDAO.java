@@ -60,10 +60,8 @@ public class MySqlStudentDAO extends MySqlDAO implements StudentDaoInterface
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        boolean completed = false;
         boolean login = false;
         Student studentLogin = null;
-        int countOfRowsAffected = 0;
 
         try
         {
@@ -85,9 +83,12 @@ public class MySqlStudentDAO extends MySqlDAO implements StudentDaoInterface
             throw new DaoException("login() " + e.getMessage());
         } finally {
             try {
-                if (studentLogin.getCaoNumber() == s.getCaoNumber() && studentLogin.getDayOfBirth().equalsIgnoreCase(s.getDayOfBirth()) && studentLogin.getPassword().equals(s.getPassword()))
+                if(studentLogin != null)
                 {
-                    login = true;
+                    if (studentLogin.getCaoNumber() == s.getCaoNumber() && studentLogin.getDayOfBirth().equalsIgnoreCase(s.getDayOfBirth()) && studentLogin.getPassword().equals(s.getPassword()))
+                    {
+                        login = true;
+                    }
                 }
                 if (rs != null) {
                     rs.close();
@@ -109,7 +110,54 @@ public class MySqlStudentDAO extends MySqlDAO implements StudentDaoInterface
     @Override
     public boolean isRegistered(Student s) throws DaoException
     {
-        return false;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean isRegistered = false;
+        Student studentLogin = null;
+
+        try
+        {
+            con = this.getConnection();
+
+            String query = "SELECT * FROM student WHERE caoNumber = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, s.getCaoNumber());
+
+            rs = ps.executeQuery();
+            if(rs.next())
+            {
+                int caoNumber = rs.getInt("caoNumber");
+                String DOB = rs.getString("dob");
+                String password = rs.getString("password");
+                studentLogin = new Student(caoNumber,DOB,password);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("isRegistered() " + e.getMessage());
+        } finally {
+            try {
+                if(studentLogin != null)
+                {
+                    if (studentLogin.getCaoNumber() == s.getCaoNumber())
+                    {
+                        isRegistered = true;
+                    }
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("isRegistered() " + e.getMessage());
+            }
+
+        }
+        return isRegistered;
     }
 
 }

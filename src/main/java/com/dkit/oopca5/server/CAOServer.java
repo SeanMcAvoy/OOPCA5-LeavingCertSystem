@@ -42,10 +42,24 @@ public class CAOServer
             System.out.println("\nStudentDAO Testing");
             System.out.println("\nregisterStudent(s)");
             Student s = new Student(71098763,"1998-11-29","12345678");
-            if(IStudentDAO.registerStudent(s)){
-                System.out.println("Successfull insert");
+//            if(IStudentDAO.registerStudent(s)){
+//                System.out.println("Successfull insert");
+//            }else{
+//                System.out.println("Failed");
+//            }
+
+            System.out.println("\nLogin()");
+            if(IStudentDAO.login(s)){
+                System.out.println("Login Successfull");
             }else{
-                System.out.println("Failed");
+                System.out.println("Incorrect Details");
+            }
+
+            System.out.println("\nisRegistered()");
+            if(IStudentDAO.isRegistered(s)){
+                System.out.println("Is Registered");
+            }else{
+                System.out.println("Not Registered");
             }
 
         }
