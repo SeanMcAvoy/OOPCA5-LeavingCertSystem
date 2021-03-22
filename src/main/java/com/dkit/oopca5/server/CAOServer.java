@@ -8,6 +8,7 @@ package com.dkit.oopca5.server;
 
 import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.Course;
+import com.dkit.oopca5.core.Student;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class CAOServer
     public static void main(String[] args)
     {
         CourseDaoInterface ICourseDAO = new MySqlCourseDAO();
+        StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
 
         try
         {
@@ -35,6 +37,15 @@ public class CAOServer
                 System.out.println("No Course with this ID");
             }else{
                 System.out.println(course);
+            }
+
+            System.out.println("\nStudentDAO Testing");
+            System.out.println("\nregisterStudent(s)");
+            Student s = new Student(71098763,"1998-11-29","12345678");
+            if(IStudentDAO.registerStudent(s)){
+                System.out.println("Successfull insert");
+            }else{
+                System.out.println("Failed");
             }
 
         }
