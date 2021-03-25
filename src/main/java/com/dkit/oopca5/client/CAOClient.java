@@ -87,33 +87,40 @@ public class CAOClient
     {
         String dob = "";
         String password = "";
+        boolean allInfoComplete = false;
+
         System.out.println("In order to Register to CAO we need your CAO number, Date of Birth and Password");
         System.out.print("CAO Number: ");
         int caoNumber = keyboard.nextInt();
         if(RegexChecker.caoNumberRegExpression(caoNumber))
         {
             boolean dobFormatCorrect = false;
+            keyboard.nextLine();
             while(!dobFormatCorrect)
             {
-                keyboard.nextLine();
+
                 System.out.println("DOB (yyyy-mm-dd):");
                 dob = keyboard.nextLine();
                 if(RegexChecker.dateRegExpression(dob))
                     dobFormatCorrect = true;
+                else{
+                    System.out.println("--Date format is (yyyy-mm-dd)--");
+                }
             }
-            keyboard.nextLine();
             System.out.print("Password: ");
             password = keyboard.next();
+            allInfoComplete = true;
         }
         else{
-            System.out.println("CAO Number must be 8 Digits");
+            System.out.println("CAO Number must be 8 Digits\n");
+
         }
-
-        String message = "REGISTER" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
-                            dob + CAOService.BREAKING_CHARACTER + password;
-
-        System.out.println("Message ready for server: "+ message);
-
+        if(allInfoComplete)
+        {
+            String message = "REGISTER" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
+                    dob + CAOService.BREAKING_CHARACTER + password;
+            System.out.println("Message ready for server: "+ message);
+        }
 
     }
 
