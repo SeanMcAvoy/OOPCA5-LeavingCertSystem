@@ -40,7 +40,8 @@ public class CAOClient
             switch (menuOption)
             {
                 case REGISTER:
-                    System.out.println("Reg");
+                    System.out.println("Register Chosen");
+                    register();
                     break;
 
                 case LOGIN:
@@ -59,14 +60,31 @@ public class CAOClient
         {
             System.out.println("\t"+ Colours.BLUE+ i + ". "+ MainMenu.values()[i].toString() + Colours.RESET);
         }
-        System.out.println("Enter a number to select option (0 to cancel):>");
+        System.out.println("Enter a number to select option (0 to cancel):");
 
     }
     private MainMenu getMainMenuOption()
     {
-        int option = Validation.menuOptionValidation();
-        MainMenu menuOption = MainMenu.values()[option];
+        MainMenu menuOption = null;
+        boolean validOption = false;
+        while(!validOption)
+        {
+            int option = Validation.menuOptionValidation();
+            if(option >= 0 && option < MainMenu.values().length)
+            {
+                validOption = true;
+                menuOption = MainMenu.values()[option];
+            }
+            else{
+                System.out.println("--Valid Options are [0 - 2]--");
+            }
+        }
+
         return menuOption;
+    }
+    private void register()
+    {
+
     }
 
 }
