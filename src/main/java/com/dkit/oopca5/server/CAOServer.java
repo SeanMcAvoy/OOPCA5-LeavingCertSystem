@@ -19,6 +19,7 @@ public class CAOServer
     {
         CourseDaoInterface ICourseDAO = new MySqlCourseDAO();
         StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
+        CourseChoiceDaoInterface ICourseChoiceDAO = new MySqlCourseChoice();
 
         try
         {
@@ -61,6 +62,18 @@ public class CAOServer
                 System.out.println("Is Registered");
             }else{
                 System.out.println("Not Registered");
+            }
+
+            System.out.println("\nfindCoursesForUser(12349678)");
+            List<String> studendsCourse = ICourseChoiceDAO.findCoursesForUser(12349678);
+            if(studendsCourse.isEmpty())
+            {
+                System.out.println("No choices picked yet");
+
+            }
+            else {
+                for(String sc : studendsCourse)
+                    System.out.println(sc);
             }
 
         }

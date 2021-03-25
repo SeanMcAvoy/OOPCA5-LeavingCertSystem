@@ -98,14 +98,11 @@ public class CAOClient
             keyboard.nextLine();
             while(!dobFormatCorrect)
             {
-
                 System.out.println("DOB (yyyy-mm-dd):");
                 dob = keyboard.nextLine();
-                if(RegexChecker.dateRegExpression(dob))
+                if(RegexChecker.dateRegExpression(dob)) //checking the date is in the right format
                     dobFormatCorrect = true;
-                else{
-                    System.out.println("--Date format is (yyyy-mm-dd)--");
-                }
+                else System.out.println("--Date format is (yyyy-mm-dd)--");
             }
             System.out.print("Password: ");
             password = keyboard.next();
@@ -113,7 +110,6 @@ public class CAOClient
         }
         else{
             System.out.println("CAO Number must be 8 Digits\n");
-
         }
         if(allInfoComplete)
         {
@@ -121,8 +117,9 @@ public class CAOClient
                     dob + CAOService.BREAKING_CHARACTER + password;
             System.out.println("Message ready for server: "+ message);
         }
-
     }
+
+
 
 }
 
