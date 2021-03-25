@@ -14,6 +14,7 @@ import java.util.List;
 
 public class CAOServer
 {
+
     public static void main(String[] args)
     {
         CourseDaoInterface ICourseDAO = new MySqlCourseDAO();
@@ -27,8 +28,7 @@ public class CAOServer
             {
                 System.out.println("There is No Courses");
             } else{
-                for(Course c : courses)
-                    System.out.println(c.toString());
+                displayAllCourses(courses);
             }
 
             System.out.println("\ngetCourseByID(DN100)");
@@ -36,6 +36,7 @@ public class CAOServer
             if(course == null){
                 System.out.println("No Course with this ID");
             }else{
+                displayCourse(course);
                 System.out.println(course);
             }
 
@@ -67,6 +68,20 @@ public class CAOServer
         {
             e.printStackTrace();
         }
+    }
+    private static void displayAllCourses(List<Course> courses)
+    {
+        String format = "%-10s%-8s %-50s%-30s\n";
+        System.out.printf(format,"CourseID","Level","Title","Institute");
+        for(Course c : courses)
+            System.out.printf(format,c.getCourseId(),c.getLevel(),c.getTitle(),c.getInstitution());
+        System.out.println();
+    }
+    private static void displayCourse(Course c)
+    {
+        System.out.println("Course Info:");
+        System.out.println("CourseID:'"+c.getCourseId()+"', Level:'"+c.getLevel()+"', Title:'"+c.getTitle()+"', Institute:'"+c.getInstitution()+"'");
+        System.out.println();
     }
 
 
