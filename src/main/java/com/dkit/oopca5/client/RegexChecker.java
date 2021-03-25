@@ -30,7 +30,7 @@ public class RegexChecker
 
     public static boolean dateRegExpression(String date)
     {
-        String regex = "^\\d{2}-\\d{2}-\\d{4}$";
+        String regex = "^\\d{4}-\\d{2}-\\d{2}$";
         String input = date;
         boolean correct = input.matches(regex);
         return correct;

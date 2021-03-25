@@ -6,6 +6,7 @@ package com.dkit.oopca5.client;
 /* The CAOClient offers students a menu and sends messages to the server using TCP Sockets
  */
 
+import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 import com.sun.tools.javac.Main;
 
@@ -84,6 +85,34 @@ public class CAOClient
     }
     private void register()
     {
+        String dob = "";
+        String password = "";
+        System.out.println("In order to Register to CAO we need your CAO number, Date of Birth and Password");
+        System.out.print("CAO Number: ");
+        int caoNumber = keyboard.nextInt();
+        if(RegexChecker.caoNumberRegExpression(caoNumber))
+        {
+            boolean dobFormatCorrect = false;
+            while(!dobFormatCorrect)
+            {
+                keyboard.nextLine();
+                System.out.println("DOB (yyyy-mm-dd):");
+                dob = keyboard.nextLine();
+                if(RegexChecker.dateRegExpression(dob))
+                    dobFormatCorrect = true;
+            }
+            keyboard.nextLine();
+            System.out.print("Password: ");
+            password = keyboard.next();
+        }
+        else{
+            System.out.println("CAO Number must be 8 Digits");
+        }
+
+        String message = "REGISTER" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
+                            dob + CAOService.BREAKING_CHARACTER + password;
+
+        System.out.println("Message ready for server: "+ message);
 
 
     }
