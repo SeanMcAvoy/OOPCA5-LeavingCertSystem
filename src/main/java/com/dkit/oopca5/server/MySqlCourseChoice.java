@@ -13,7 +13,7 @@ import java.util.List;
 public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterface
 {
     @Override
-    public List<String> findCoursesForUser(int caoNumber) throws DaoException
+    public List<String> getUsersCoursesChoices(int caoNumber) throws DaoException
     {
         Connection con = null;
         PreparedStatement ps = null;
