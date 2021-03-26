@@ -50,11 +50,6 @@ public class Course
     public void setTitle(String title) { this.title = title; }
 
 
-    public int compareTo(Course c)
-    {
-        return courseId.compareTo(c.courseId);
-    }
-
 
 
     @Override

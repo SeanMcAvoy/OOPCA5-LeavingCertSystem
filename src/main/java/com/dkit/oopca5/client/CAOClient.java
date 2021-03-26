@@ -98,9 +98,9 @@ public class CAOClient
         boolean allInfoComplete = false;
 
         System.out.println("In order to Register to CAO we need your CAO number, Date of Birth and Password");
-        System.out.print("CAO Number: ");
-        int caoNumber = keyboard.nextInt();
-        if(RegexChecker.caoNumberRegExpression(caoNumber))
+
+        int caoNumber = RegexChecker.correctCAONumber();
+        if(true)
         {
             boolean dobFormatCorrect = false;
             keyboard.nextLine();
@@ -144,6 +144,23 @@ public class CAOClient
     private void doLoginMenu()
     {
         printLoginMenu();
+        LoginMenu loginOption = getLoginMenuOption();
+        while(loginOption != LoginMenu.QUIT)
+        {
+            switch (loginOption)
+            {
+                case LOGOUT:
+                    break;
+
+            }
+
+        }
+    }
+
+    private LoginMenu getLoginMenuOption()
+    {
+        return null;
+
     }
 
 

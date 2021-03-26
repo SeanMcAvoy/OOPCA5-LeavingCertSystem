@@ -3,24 +3,40 @@ package com.dkit.oopca5.client;
 /* This class should contain static methods to verify input in the application
  */
 
+import java.util.Scanner;
+
 public class RegexChecker
 {
-    public static boolean caoNumberRegExpression(int caoNumber)
+    private  static Scanner keyboard = new Scanner(System.in);
+
+    private static boolean caoNumberRegExpression(int caoNumber)
     {
         String regex = "\\d{8}";
         String input = Integer.toString(caoNumber);
         boolean caoNumberOK = input.matches(regex);
         return caoNumberOK;
     }
+    public static int correctCAONumber()
+    {
+        int caoNumber;
+        do{
+            System.out.print("CAO Number: ");
+            caoNumber = keyboard.nextInt();
+            if(!caoNumberRegExpression(caoNumber))
+                System.out.println("CAO Number must be 8 Digits\n");
+        }while(!caoNumberRegExpression(caoNumber));
+        return caoNumber;
 
-    public static boolean courseIDRegExpression(String courseID)
+    }
+
+    private static boolean courseIDRegExpression(String courseID)
     {
         String regex = "^[a-zA-Z0-9]{5}$";
         String input = courseID;
         boolean courseIDOK = input.matches(regex);
         return courseIDOK;
     }
-    public static boolean courseLevelRegExpression(String courseLevel)
+    private static boolean courseLevelRegExpression(String courseLevel)
     {
         String regex = "^[7-9]{1}||[0-1]{2}$";
         String input = courseLevel;
@@ -28,7 +44,7 @@ public class RegexChecker
         return correct;
     }
 
-    public static boolean dateRegExpression(String date)
+    private static boolean dateRegExpression(String date)
     {
         String regex = "^\\d{4}-\\d{2}-\\d{2}$";
         String input = date;
