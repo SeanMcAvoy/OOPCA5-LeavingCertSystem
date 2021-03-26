@@ -74,8 +74,39 @@ public class AppTest
     }
 
     @Test
-    public void registerStudent()
+    public void registerStudentTest()
     {
 
     }
+
+    @Test
+    public void loginTest()
+    {
+
+    }
+
+    @Test
+    public void loginTest2()
+    {
+            //when input info is wrong
+    }
+
+    @Test
+    public void isRegisteredTest()
+    {
+
+    }
+
+    @Test
+    public void getUsersCoursesChoicesTest()
+    {
+
+    }
+    @Test
+    public void updateCoursesForUserTest()
+    {
+
+    }
+
+
 }

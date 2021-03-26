@@ -47,6 +47,14 @@ public class CAOClient
 
                 case LOGIN:
                     System.out.println("Login");
+                    boolean login = login();
+                    if(login)
+                    {
+                        doLoginMenu();
+                    }
+                    else{
+                        //login failed
+                    }
                     break;
             }
 
@@ -117,6 +125,25 @@ public class CAOClient
                     dob + CAOService.BREAKING_CHARACTER + password;
             System.out.println("Message ready for server: "+ message);
         }
+    }
+
+    private boolean login()
+    {
+        return true;
+    }
+
+    private void printLoginMenu()
+    {
+        for (int i = 0; i < LoginMenu.values().length; i++)
+        {
+            System.out.println("\t"+ Colours.GREEN+ i +". "+ LoginMenu.values()[i].toString() + Colours.RESET);
+        }
+        System.out.println("Enter a number to select option:");
+    }
+
+    private void doLoginMenu()
+    {
+        printLoginMenu();
     }
 
 

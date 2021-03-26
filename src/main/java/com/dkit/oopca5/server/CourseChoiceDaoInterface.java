@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CourseChoiceDaoInterface
 {
-    public List<String> findCoursesForUser(int caoNumber) throws DaoException;
+    public List<String> getUsersCoursesChoices(int caoNumber) throws DaoException;
     public void updateCoursesForUser(int caoNumber, List<String> courses) throws DaoException;
 }

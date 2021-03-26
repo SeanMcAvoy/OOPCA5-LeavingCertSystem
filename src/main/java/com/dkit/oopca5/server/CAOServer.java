@@ -65,7 +65,7 @@ public class CAOServer
             }
 
             System.out.println("\nfindCoursesForUser(12349678)");
-            List<String> studendsCourse = ICourseChoiceDAO.findCoursesForUser(12349678);
+            List<String> studendsCourse = ICourseChoiceDAO.getUsersCoursesChoices(12349678);
             if(studendsCourse.isEmpty())
             {
                 System.out.println("No choices picked yet");
