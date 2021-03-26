@@ -55,11 +55,12 @@ public class RegexChecker
     public static String correctDOB()
     {
         String DOB;
+        keyboard.nextLine();
         do{
             System.out.println("DOB (yyyy-mm-dd):");
             DOB = keyboard.nextLine();
             if(!RegexChecker.dateRegExpression(DOB)) //checking the date is in the right format
-                System.out.println("--Date format is (yyyy-mm-dd)--\n");
+                System.out.println("--Date format is (yyyy-mm-dd)--");
         }while(!dateRegExpression(DOB));
         return DOB;
     }
