@@ -4,11 +4,12 @@ import static org.junit.Assert.assertTrue;
 
 import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.Course;
-import com.dkit.oopca5.server.CourseDaoInterface;
-import com.dkit.oopca5.server.MySqlCourseDAO;
+import com.dkit.oopca5.core.Student;
+import com.dkit.oopca5.server.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,35 +77,125 @@ public class AppTest
     @Test
     public void registerStudentTest()
     {
+        System.out.println("registerStudentTest() - has a delete method that deletes CAO Number 90988872 before it gets added to stop" +
+                "primary key Dup error");
+        StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
+        try{
+            IStudentDAO.deleteStudentForTesting();
+            Student s = new Student(90988872,"1998-11-29","Test");
+            Boolean result = false;
+            if(IStudentDAO.registerStudent(s)) {
+                result = true;
+            }
+            Boolean expResult = true;
+            Assert.assertEquals(expResult,result);
+        }catch (DaoException e)
+        {
+            e.printStackTrace();
+        }
 
     }
+
+
 
     @Test
     public void loginTest()
     {
-
+        System.out.println("Login with correct Details");
+        StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
+        try{
+            Student s = new Student(90988872,"1998-11-29","Test");
+            Boolean result = false;
+            if(IStudentDAO.login(s)) {
+                result = true;
+            }
+            Boolean expResult = true;
+            Assert.assertEquals(expResult,result);
+        }catch (DaoException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void loginTest2()
     {
-            //when input info is wrong
+        System.out.println("Login with wrong Details");
+        StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
+        try{
+            Student s = new Student(90988872,"1998-11-29","Tes");
+            Boolean result = false;
+            if(IStudentDAO.login(s)) {
+                result = true;
+            }
+            Boolean expResult = false;
+            Assert.assertEquals(expResult,result);
+        }catch (DaoException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void isRegisteredTest()
     {
+        StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
+        try{
+            Student s = new Student(90988872,"1998-11-29","Test");
+            Boolean result = false;
+            if(IStudentDAO.isRegistered(s)) {
+                result = true;
+            }
+            Boolean expResult = true;
+            Assert.assertEquals(expResult,result);
+        }catch (DaoException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
     @Test
     public void getUsersCoursesChoicesTest()
     {
+        CourseChoiceDaoInterface ICourseChoiceDAO = new MySqlCourseChoice();
+        try{
+            Boolean result = false;
+            List<String> studendsCourse = ICourseChoiceDAO.getUsersCoursesChoices(12349678);
+            if(!studendsCourse.isEmpty())
+            {
+                result = true;
+            }
+            Boolean expResult = true;
+            Assert.assertEquals(expResult,result);
+        }catch (DaoException e)
+        {
+            e.printStackTrace();
+        }
 
     }
+
     @Test
     public void updateCoursesForUserTest()
     {
+        CourseChoiceDaoInterface ICourseChoiceDAO = new MySqlCourseChoice();
+        try{
+            Boolean result = false;
+            List<String>studentChoices = new ArrayList<>();
+            studentChoices.add("DK845");
+            studentChoices.add("DN100");
+            studentChoices.add("DN150");
+            if(ICourseChoiceDAO.updateCoursesForUser(80910958,studentChoices))
+            {
+                result = true;
+            }
+            Boolean expResult = true;
+            Assert.assertEquals(expResult,result);
+        }catch (DaoException e)
+        {
+            e.printStackTrace();
+        }
+
 
     }
 

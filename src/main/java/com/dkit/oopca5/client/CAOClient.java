@@ -47,10 +47,10 @@ public class CAOClient
 
                 case LOGIN:
                     System.out.println("Login");
-                    boolean login = login();
-                    if(login)
+                    int user = login();
+                    if(true)
                     {
-                        doLoginMenu();
+                        doLoginMenu(user);
                     }
                     else{
                         //login failed
@@ -102,11 +102,48 @@ public class CAOClient
         String message = "REGISTER" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
                     dob + CAOService.BREAKING_CHARACTER + password;
         System.out.println("Message ready for server: "+ message);
+
+        /*
+        * send Message to server on OUT
+        * read respone from Server on IN
+        * */
+        String response = CAOService.SUCCESSFUL_REGISTER; //Just To mimic Successful response
+        if(response.equals(CAOService.SUCCESSFUL_REGISTER))
+        {
+            System.out.println("Registered ");
+        }
+        else if(response.equals(CAOService.FAILED_REGISTER))
+        {
+            System.out.println("There was a problem with the registration");
+        }
     }
 
-    private boolean login()
+    private int login()
     {
-        return true;
+        int caoNumberReturn = 0;
+        int caoNumber = RegexChecker.correctCAONumber();
+        String dob = RegexChecker.correctDOB();
+        System.out.print("Password: ");
+        String password = keyboard.next();
+        String message = "LOGIN" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
+                dob + CAOService.BREAKING_CHARACTER + password;
+        System.out.println("Message ready for server: "+ message);
+
+        /*
+         * send Message to server on OUT
+         * read respone from Server on IN
+         * */
+        String response = CAOService.SUCCESSFUL_LOGIN; //Just To mimic Successful response
+        if(response.equals(CAOService.SUCCESSFUL_LOGIN))
+        {
+            System.out.println("LOGGED IN ");
+            caoNumberReturn = caoNumber;
+        }
+        else if(response.equals(CAOService.FAILED_LOGIN))
+        {
+            System.out.println("LOGIN FAILED");
+        }
+        return caoNumberReturn;
     }
 
     private void printLoginMenu()
@@ -118,7 +155,7 @@ public class CAOClient
         System.out.println("Enter a number to select option:");
     }
 
-    private void doLoginMenu()
+    private void doLoginMenu(int user)
     {
         printLoginMenu();
         LoginMenu loginOption = getLoginMenuOption();
@@ -127,7 +164,12 @@ public class CAOClient
             switch (loginOption)
             {
                 case LOGOUT:
+                    System.out.println("Logged Out");
                     break;
+                case DISPLAY_COURSE:
+
+                    break;
+
 
             }
 
@@ -136,7 +178,22 @@ public class CAOClient
 
     private LoginMenu getLoginMenuOption()
     {
-        return null;
+        LoginMenu menuOption = null;
+        boolean validOption = false;
+        while(!validOption)
+        {
+            int option = Validation.menuOptionValidation();
+            if(option >= 0 && option < LoginMenu.values().length)
+            {
+                validOption = true;
+                menuOption = LoginMenu.values()[option];
+            }
+            else{
+                System.out.println("--Valid Options are [0 - 5]--");
+            }
+        }
+
+        return menuOption;
 
     }
 

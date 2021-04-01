@@ -160,4 +160,36 @@ public class MySqlStudentDAO extends MySqlDAO implements StudentDaoInterface
         return isRegistered;
     }
 
+    @Override
+    public void deleteStudentForTesting() throws DaoException
+    {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = this.getConnection();
+
+            String query = "DELETE FROM `student` WHERE `student`.`caoNumber` = 90988872";
+            ps = con.prepareStatement(query);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("deleteStudent() " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("deleteStudent() " + e.getMessage());
+            }
+
+        }
+    }
+
 }

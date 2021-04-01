@@ -9,5 +9,13 @@ public interface StudentDaoInterface
     public boolean login(Student s) throws DaoException;
     public boolean isRegistered(Student s) throws DaoException;
 
+    /**
+     * Deletes The Test student so every time junit Test are run the duplicate Primary Key (CAO number)
+     * error is not thrown. Only deletes caoNumber 90988872
+     * @throws DaoException
+     */
+    public void deleteStudentForTesting() throws DaoException;
+
+
 
 }

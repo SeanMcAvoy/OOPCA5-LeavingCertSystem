@@ -19,6 +19,14 @@ public class MySqlDAO
         String password = "root";
         Connection con = null;
 
+        /** You might need use this to suit your pc as I am on mac **/
+
+//        String driver = "com.mysql.cj.jdbc.Driver";
+//        String url = "jdbc:mysql://localhost:3306/NAMEOF_database";
+//        String username = "root";
+//        String password = "";
+//        Connection con = null;
+
         try
         {
             Class.forName(driver);
