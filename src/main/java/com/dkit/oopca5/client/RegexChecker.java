@@ -36,6 +36,18 @@ public class RegexChecker
         boolean courseIDOK = input.matches(regex);
         return courseIDOK;
     }
+    public static String correctCourseID()
+    {
+        String courseID;
+        do{
+            System.out.print("Course ID: ");
+            courseID = keyboard.next();
+            if(!courseIDRegExpression(courseID))
+                System.out.println("--Course ID length of 5--\n");
+        }while(!courseIDRegExpression(courseID));
+        return courseID;
+    }
+
     private static boolean courseLevelRegExpression(String courseLevel)
     {
         String regex = "^[7-9]{1}||[0-1]{2}$";

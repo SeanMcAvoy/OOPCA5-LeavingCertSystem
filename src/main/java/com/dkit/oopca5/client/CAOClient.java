@@ -201,9 +201,14 @@ public class CAOClient
                     displayAllCourses();
                     break;
                 case DISPLAY_CURRENT_CHOICES:
-                    displayCurrentChoices(user);
+                    if(user != 0)
+                        displayCurrentChoices(user);
+                    else System.out.println("Must be login");
                     break;
                 case UPDATE_CURRENT_CHOICES:
+                    if(user != 0)
+                        updateCurrentChoices(user);
+                    else System.out.println("Must be login");
                     break;
             }
             printLoginMenu();
@@ -242,8 +247,19 @@ public class CAOClient
     {
         List<String> choices = new ArrayList<>();
         System.out.println("Enter your choices in preference from first to last.");
-        while()
-        String message = "DISPLAY CURRENT" + CAOService.BREAKING_CHARACTER + user;
+        boolean finished = false;
+        while(!finished)
+        {
+            String courseID = RegexChecker.correctCourseID();
+            choices.add(courseID);
+            System.out.println("Do you wish to enter another?");
+            finished = Validation.yesNoValidation();
+        }
+        String message = "DISPLAY CURRENT"+ CAOService.BREAKING_CHARACTER + user;
+        for (String c : choices)
+        {
+            message += CAOService.BREAKING_CHARACTER + c;
+        }
         System.out.println("Message ready for server: "+ message);
     }
 
