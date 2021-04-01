@@ -218,8 +218,7 @@ public class CAOClient
     private void displayCourse()
     {
         System.out.println("Course ID of the course the course you would like to see");
-        System.out.print(">");
-        String courseID = keyboard.next();
+        String courseID = RegexChecker.correctCourseID();
         String message = "DISPLAY COURSE" + CAOService.BREAKING_CHARACTER + courseID;
         System.out.println("Message ready for server: "+ message);
 
@@ -247,15 +246,15 @@ public class CAOClient
     {
         List<String> choices = new ArrayList<>();
         System.out.println("Enter your choices in preference from first to last.");
-        boolean finished = false;
-        while(!finished)
+        boolean notFinished = true;
+        while(notFinished)
         {
             String courseID = RegexChecker.correctCourseID();
             choices.add(courseID);
             System.out.println("Do you wish to enter another?");
-            finished = Validation.yesNoValidation();
+            notFinished = Validation.yesNoValidation();
         }
-        String message = "DISPLAY CURRENT"+ CAOService.BREAKING_CHARACTER + user;
+        String message = "UPDATE CURRENT"+ CAOService.BREAKING_CHARACTER + user;
         for (String c : choices)
         {
             message += CAOService.BREAKING_CHARACTER + c;
