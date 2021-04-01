@@ -67,6 +67,7 @@ public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterf
     {
         Connection con = null;
         PreparedStatement ps = null;
+        PreparedStatement ps1 = null;
         ResultSet rs = null;
         boolean completed = false;
         int countOfRowsAffected = 0;
@@ -74,16 +75,19 @@ public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterf
 
         try {
             con = this.getConnection();
+            String deleteQuery = "DELETE FROM `student_courses` WHERE `student_courses`.`caoNumber` = ?";
+            ps1 = con.prepareStatement(deleteQuery);
+            ps1.setInt(1,caoNumber);
+            ps1.executeUpdate();
             while(i < courses.size())
             {
-                //// INSERT INTO `student_courses` VALUES ('12349678', 'DN100', '2');
                 String query = "INSERT INTO `student_courses` VALUES (?,?,?)";
                 ps = con.prepareStatement(query);
 
                 ps.setInt(1, caoNumber);
                 ps.setString(2, courses.get(i));
                 ps.setInt(3, i+1);
-                ps.executeQuery();
+                ps.executeUpdate();
                 i++;
             }
             if(i == courses.size())

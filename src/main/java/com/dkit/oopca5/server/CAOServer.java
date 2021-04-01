@@ -10,6 +10,7 @@ import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.Course;
 import com.dkit.oopca5.core.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CAOServer
@@ -75,6 +76,19 @@ public class CAOServer
                 for(String sc : studendsCourse)
                     System.out.println(sc);
             }
+
+            System.out.println("updateCoursesForUser()");
+            List<String>studentChoices = new ArrayList<>();
+            studentChoices.add("DK845");
+            studentChoices.add("DN100");
+            studentChoices.add("DN150");
+            if(ICourseChoiceDAO.updateCoursesForUser(80910958,studentChoices))
+            {
+                System.out.println("Choices Updated");
+            }else{
+                System.out.println("Failed");
+            }
+
 
         }
         catch (DaoException e)
