@@ -63,8 +63,55 @@ public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterf
     }
 
     @Override
-    public void updateCoursesForUser(int caoNumber, List<String> courses) throws DaoException
+    public boolean updateCoursesForUser(int caoNumber, List<String> courses) throws DaoException
     {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean completed = false;
+        int countOfRowsAffected = 0;
+        int i = 0;
+
+        try {
+            con = this.getConnection();
+            while(i < courses.size())
+            {
+                //// INSERT INTO `student_courses` VALUES ('12349678', 'DN100', '2');
+                String query = "INSERT INTO `student_courses` VALUES (?,?,?)";
+                ps = con.prepareStatement(query);
+
+                ps.setInt(1, caoNumber);
+                ps.setString(2, courses.get(i));
+                ps.setInt(3, i+1);
+                ps.executeQuery();
+                i++;
+            }
+            if(i == courses.size())
+            {
+                completed = true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("updateCoursesForUser()" + e.getMessage());
+        } finally {
+            try {
+                if (countOfRowsAffected > 0) {
+                    completed = true;
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    freeConnection(con);
+                }
+            } catch (SQLException e) {
+                throw new DaoException("updateCoursesForUser() " + e.getMessage());
+            }
+
+        }
+        return completed;
     }
 
 }

@@ -9,4 +9,5 @@ public interface StudentDaoInterface
     public boolean login(Student s) throws DaoException;
     public boolean isRegistered(Student s) throws DaoException;
 
+
 }
