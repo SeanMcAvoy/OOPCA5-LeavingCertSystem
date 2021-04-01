@@ -15,6 +15,16 @@ public class CAOService
     public static final String SUCCESSFUL_REGISTER = "REGISTERED";
     public static final String FAILED_REGISTER = "REG FAILED";
 
+    public static final String LOGIN_COMMAND = "LOGIN";
     public static final String SUCCESSFUL_LOGIN = "LOGGED IN";
     public static final String FAILED_LOGIN = "LOGIN FAILED";
+
+    // need the to create:
+    // Logout Commands
+    // DISPLAY COURSE commands
+    // displayAll commands
+    // Display current choices command
+    // Update choices commands
+
+
 }

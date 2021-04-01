@@ -10,6 +10,8 @@ import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 import com.sun.tools.javac.Main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CAOClient
@@ -21,6 +23,7 @@ public class CAOClient
         System.out.println("Welcome to the CAO Service");
         CAOClient client = new CAOClient();
         client.start();
+        System.out.println("\nGood bye");
     }
 
     private void start()
@@ -47,14 +50,16 @@ public class CAOClient
 
                 case LOGIN:
                     System.out.println("Login");
-                    int user = login();
-                    if(true)
-                    {
-                        doLoginMenu(user);
-                    }
-                    else{
-                        //login failed
-                    }
+                    login();
+//                    if(true)
+//                    {
+//                        //doLoginMenu(user); is in the login() atm for when success or will move out?
+//                        // or is it better to put the above method in the login()
+//
+//                    }
+//                    else{
+//                        //login failed
+//                    }
                     break;
             }
 
@@ -118,9 +123,9 @@ public class CAOClient
         }
     }
 
-    private int login()
+    private void login()
     {
-        int caoNumberReturn = 0;
+        //int caoNumberReturn = 0;
         int caoNumber = RegexChecker.correctCAONumber();
         String dob = RegexChecker.correctDOB();
         System.out.print("Password: ");
@@ -137,13 +142,14 @@ public class CAOClient
         if(response.equals(CAOService.SUCCESSFUL_LOGIN))
         {
             System.out.println("LOGGED IN ");
-            caoNumberReturn = caoNumber;
+            //caoNumberReturn = caoNumber;
+            doLoginMenu(caoNumber);
         }
         else if(response.equals(CAOService.FAILED_LOGIN))
         {
             System.out.println("LOGIN FAILED");
         }
-        return caoNumberReturn;
+        //return caoNumberReturn;
     }
 
     private void printLoginMenu()
@@ -153,27 +159,6 @@ public class CAOClient
             System.out.println("\t"+ Colours.GREEN+ i +". "+ LoginMenu.values()[i].toString() + Colours.RESET);
         }
         System.out.println("Enter a number to select option:");
-    }
-
-    private void doLoginMenu(int user)
-    {
-        printLoginMenu();
-        LoginMenu loginOption = getLoginMenuOption();
-        while(loginOption != LoginMenu.QUIT)
-        {
-            switch (loginOption)
-            {
-                case LOGOUT:
-                    System.out.println("Logged Out");
-                    break;
-                case DISPLAY_COURSE:
-
-                    break;
-
-
-            }
-
-        }
     }
 
     private LoginMenu getLoginMenuOption()
@@ -196,6 +181,75 @@ public class CAOClient
         return menuOption;
 
     }
+
+    private void doLoginMenu(int user)
+    {
+        printLoginMenu();
+        LoginMenu loginOption = getLoginMenuOption();
+        while(loginOption != LoginMenu.QUIT)
+        {
+            switch (loginOption)
+            {
+                case LOGOUT:
+                    System.out.println("Logged Out");
+                    user = 0;
+                    break;
+                case DISPLAY_COURSE:
+                    displayCourse();
+                    break;
+                case DISPLAY_ALL_COURSES:
+                    displayAllCourses();
+                    break;
+                case DISPLAY_CURRENT_CHOICES:
+                    displayCurrentChoices(user);
+                    break;
+                case UPDATE_CURRENT_CHOICES:
+                    break;
+            }
+            printLoginMenu();
+            loginOption = getLoginMenuOption();
+        }
+    }
+    private void displayCourse()
+    {
+        System.out.println("Course ID of the course the course you would like to see");
+        System.out.print(">");
+        String courseID = keyboard.next();
+        String message = "DISPLAY COURSE" + CAOService.BREAKING_CHARACTER + courseID;
+        System.out.println("Message ready for server: "+ message);
+
+//        String response = CAOService.SUCCESSFUL_REGISTER; //Just To mimic Successful response
+//        if(response.equals(CAOService.SUCCESSFUL_REGISTER))
+//        {
+//            System.out.println("Registered ");
+//        }
+//        else if(response.equals(CAOService.FAILED_REGISTER))
+//        {
+//            System.out.println("There was a problem with the registration");
+//        }
+    }
+    private void displayAllCourses()
+    {
+        System.out.println("All Courses: ");
+    }
+    private void displayCurrentChoices(int user)
+    {
+        String message = "DISPLAY CURRENT" + CAOService.BREAKING_CHARACTER + user;
+        System.out.println("Message ready for server: "+ message);
+    }
+
+    private void updateCurrentChoices(int user)
+    {
+        List<String> choices = new ArrayList<>();
+        System.out.println("Enter your choices in preference from first to last.");
+        while()
+        String message = "DISPLAY CURRENT" + CAOService.BREAKING_CHARACTER + user;
+        System.out.println("Message ready for server: "+ message);
+    }
+
+
+
+
 
 
 

@@ -27,4 +27,36 @@ public class Validation
 
         return option;
     }
+
+    public static Boolean yesNoValidation()
+    {
+        Boolean answer = null;
+        try
+        {
+            boolean correct = false;
+            while(!correct)
+            {
+                Scanner in = new Scanner(System.in);
+                System.out.print("Answer: ");
+                String ans = in.next();
+                if(ans.equalsIgnoreCase("Yes"))
+                {
+                    correct = true;
+                    answer = true;
+                }
+                else if(ans.equalsIgnoreCase("No"))
+                {
+                    correct = true;
+                    answer =false;
+                }
+                else {
+                    System.out.println("Error - Valid input is [Yes/No]");
+                }
+            }
+        }catch(InputMismatchException e) {
+            System.out.println("--Please Enter an String--");
+        }
+        return answer;
+
+    }
 }
