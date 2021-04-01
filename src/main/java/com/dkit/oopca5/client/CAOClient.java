@@ -34,7 +34,6 @@ public class CAOClient
 
     }
 
-
     private void doMainMenuLoop()
     {
         printMainMenu();
@@ -51,15 +50,6 @@ public class CAOClient
                 case LOGIN:
                     System.out.println("Login");
                     login();
-//                    if(true)
-//                    {
-//                        //doLoginMenu(user); is in the login() atm for when success or will move out?
-//                        // or is it better to put the above method in the login()
-//
-//                    }
-//                    else{
-//                        //login failed
-//                    }
                     break;
             }
 
@@ -125,7 +115,6 @@ public class CAOClient
 
     private void login()
     {
-        //int caoNumberReturn = 0;
         int caoNumber = RegexChecker.correctCAONumber();
         String dob = RegexChecker.correctDOB();
         System.out.print("Password: ");
@@ -142,14 +131,12 @@ public class CAOClient
         if(response.equals(CAOService.SUCCESSFUL_LOGIN))
         {
             System.out.println("LOGGED IN ");
-            //caoNumberReturn = caoNumber;
             doLoginMenu(caoNumber);
         }
         else if(response.equals(CAOService.FAILED_LOGIN))
         {
             System.out.println("LOGIN FAILED");
         }
-        //return caoNumberReturn;
     }
 
     private void printLoginMenu()
@@ -234,7 +221,8 @@ public class CAOClient
     }
     private void displayAllCourses()
     {
-        System.out.println("All Courses: ");
+        String message = "DISPLAY_ALL";
+        System.out.println("Message ready for server: "+ message);
     }
     private void displayCurrentChoices(int user)
     {
