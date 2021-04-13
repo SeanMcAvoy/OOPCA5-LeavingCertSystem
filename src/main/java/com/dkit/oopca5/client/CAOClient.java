@@ -10,6 +10,10 @@ import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
 import com.sun.tools.javac.Main;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,9 +24,9 @@ public class CAOClient
 
     public static void main(String[] args)
     {
-        System.out.println("Welcome to the CAO Service");
         CAOClient client = new CAOClient();
         client.start();
+        System.out.println("\nWelcome to the CAO Service");
         System.out.println("\nGood bye");
     }
 
@@ -30,11 +34,29 @@ public class CAOClient
     {
         //Declare and create socket (using constants from CAOServices)
         //Declare and create Scanner & printWritter objects & pass to method below
-        doMainMenuLoop();
+        Scanner in = new Scanner(System.in);
+        try{
+            Socket socket = new Socket(CAOService.HOSTNAME, 8080);  // connect to server socket
+            System.out.println("Client: Port# of this client : " + socket.getLocalPort());
+            System.out.println("Client: Port# of Server :" + socket.getPort() );
+            System.out.println("Client message: The Client is running and has connected to the server");
+            OutputStream os = socket.getOutputStream();
+            PrintWriter socketWriter = new PrintWriter(os, true);   // true => auto flush buffers
+            Scanner socketReader = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+
+            doMainMenuLoop(socketWriter,socketReader);
+
+            socketWriter.close();
+            socketReader.close();
+            socket.close();
+
+        } catch (IOException e) {
+            System.out.println("Client message: IOException: "+e);
+        }
 
     }
 
-    private void doMainMenuLoop()
+    private void doMainMenuLoop(PrintWriter socketWriter, Scanner socketReader)
     {
         printMainMenu();
         MainMenu menuOption = getMainMenuOption();
@@ -44,18 +66,15 @@ public class CAOClient
             {
                 case REGISTER:
                     System.out.println("Register Chosen");
-                    register();
+                    register(socketWriter,socketReader);
                     break;
-
                 case LOGIN:
                     System.out.println("Login");
-                    login();
+                    login(socketWriter,socketReader);
                     break;
             }
-
             printMainMenu();
             menuOption = getMainMenuOption();
-
         }
     }
     private void printMainMenu()
@@ -86,7 +105,7 @@ public class CAOClient
 
         return menuOption;
     }
-    private void register()
+    private void register(PrintWriter socketWriter, Scanner socketReader)
     {
         System.out.println("In order to Register to CAO we need your CAO number, Date of Birth and Password");
 
@@ -102,10 +121,11 @@ public class CAOClient
         * send Message to server on OUT
         * read respone from Server on IN
         * */
+
         String response = CAOService.SUCCESSFUL_REGISTER; //Just To mimic Successful response
         if(response.equals(CAOService.SUCCESSFUL_REGISTER))
         {
-            System.out.println("Registered ");
+            System.out.println("Registered");
         }
         else if(response.equals(CAOService.FAILED_REGISTER))
         {
@@ -113,7 +133,7 @@ public class CAOClient
         }
     }
 
-    private void login()
+    private void login(PrintWriter socketWriter, Scanner socketReader)
     {
         int caoNumber = RegexChecker.correctCAONumber();
         String dob = RegexChecker.correctDOB();
@@ -131,7 +151,7 @@ public class CAOClient
         if(response.equals(CAOService.SUCCESSFUL_LOGIN))
         {
             System.out.println("LOGGED IN ");
-            doLoginMenu(caoNumber);
+            doLoginMenu(caoNumber,socketWriter,socketReader);
         }
         else if(response.equals(CAOService.FAILED_LOGIN))
         {
@@ -169,7 +189,7 @@ public class CAOClient
 
     }
 
-    private void doLoginMenu(int user)
+    private void doLoginMenu(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         printLoginMenu();
         LoginMenu loginOption = getLoginMenuOption();
@@ -182,19 +202,19 @@ public class CAOClient
                     user = 0;
                     break;
                 case DISPLAY_COURSE:
-                    displayCourse();
+                    displayCourse(socketWriter,socketReader);
                     break;
                 case DISPLAY_ALL_COURSES:
-                    displayAllCourses();
+                    displayAllCourses(socketWriter,socketReader);
                     break;
                 case DISPLAY_CURRENT_CHOICES:
                     if(user != 0)
-                        displayCurrentChoices(user);
+                        displayCurrentChoices(user,socketWriter,socketReader);
                     else System.out.println("Must be login");
                     break;
                 case UPDATE_CURRENT_CHOICES:
                     if(user != 0)
-                        updateCurrentChoices(user);
+                        updateCurrentChoices(user,socketWriter,socketReader);
                     else System.out.println("Must be login");
                     break;
             }
@@ -202,7 +222,7 @@ public class CAOClient
             loginOption = getLoginMenuOption();
         }
     }
-    private void displayCourse()
+    private void displayCourse(PrintWriter socketWriter, Scanner socketReader)
     {
         System.out.println("Course ID of the course the course you would like to see");
         String courseID = RegexChecker.correctCourseID();
@@ -219,18 +239,18 @@ public class CAOClient
 //            System.out.println("There was a problem with the registration");
 //        }
     }
-    private void displayAllCourses()
+    private void displayAllCourses(PrintWriter socketWriter, Scanner socketReader)
     {
-        String message = "DISPLAY_ALL";
+        String message = "DISPLAY ALL";
         System.out.println("Message ready for server: "+ message);
     }
-    private void displayCurrentChoices(int user)
+    private void displayCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         String message = "DISPLAY CURRENT" + CAOService.BREAKING_CHARACTER + user;
         System.out.println("Message ready for server: "+ message);
     }
 
-    private void updateCurrentChoices(int user)
+    private void updateCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         List<String> choices = new ArrayList<>();
         System.out.println("Enter your choices in preference from first to last.");

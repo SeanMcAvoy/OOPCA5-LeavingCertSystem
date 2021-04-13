@@ -19,6 +19,8 @@ public class CAOService
     public static final String SUCCESSFUL_LOGIN = "LOGGED IN";
     public static final String FAILED_LOGIN = "LOGIN FAILED";
 
+
+
     // need the to create:
     // Logout Commands
     // DISPLAY COURSE commands
