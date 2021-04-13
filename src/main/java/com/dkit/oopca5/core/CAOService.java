@@ -14,6 +14,7 @@ public class CAOService
     public static final String REGISTER_COMMAND = "REGISTER";
     public static final String SUCCESSFUL_REGISTER = "REGISTERED";
     public static final String FAILED_REGISTER = "REG FAILED";
+    public static final String CAO_Number_Duplicate = "Duplicate CAO number";
 
     public static final String LOGIN_COMMAND = "LOGIN";
     public static final String SUCCESSFUL_LOGIN = "LOGGED IN";

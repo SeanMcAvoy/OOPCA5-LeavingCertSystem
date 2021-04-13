@@ -26,7 +26,6 @@ public class CAOClient
     {
         CAOClient client = new CAOClient();
         client.start();
-        System.out.println("\nWelcome to the CAO Service");
         System.out.println("\nGood bye");
     }
 
@@ -41,9 +40,10 @@ public class CAOClient
             System.out.println("Client: Port# of Server :" + socket.getPort() );
             System.out.println("Client message: The Client is running and has connected to the server");
             OutputStream os = socket.getOutputStream();
-            PrintWriter socketWriter = new PrintWriter(os, true);   // true => auto flush buffers
             Scanner socketReader = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
+            PrintWriter socketWriter = new PrintWriter(os, true);   // true => auto flush buffers
 
+            System.out.println("\nWelcome to the CAO Service");
             doMainMenuLoop(socketWriter,socketReader);
 
             socketWriter.close();
@@ -113,16 +113,16 @@ public class CAOClient
         String dob = RegexChecker.correctDOB();
         System.out.print("Password: ");
         String password = keyboard.next();
-        String message = "REGISTER" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
+        String message = CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
                     dob + CAOService.BREAKING_CHARACTER + password;
-        System.out.println("Message ready for server: "+ message);
+        //System.out.println("Message ready for server: "+ message);
 
         /*
         * send Message to server on OUT
         * read respone from Server on IN
         * */
-
-        String response = CAOService.SUCCESSFUL_REGISTER; //Just To mimic Successful response
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
         if(response.equals(CAOService.SUCCESSFUL_REGISTER))
         {
             System.out.println("Registered");
@@ -130,6 +130,10 @@ public class CAOClient
         else if(response.equals(CAOService.FAILED_REGISTER))
         {
             System.out.println("There was a problem with the registration");
+        }
+        else if(response.equals(CAOService.CAO_Number_Duplicate))
+        {
+            System.out.println("CAO number is already Taken");
         }
     }
 
