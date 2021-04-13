@@ -84,6 +84,26 @@ public class CAOClientHandler implements Runnable
                          e.printStackTrace();
                      }
                 }
+                if(components[0].equals(CAOService.LOGIN_COMMAND))
+                {
+                    int caoNumber = parseInt(components[1]);
+                    String date = components[2];
+                    String password = components[3];
+                    Student s = new Student(caoNumber,date,password);
+                    try{
+                        if(IStudentDAO.login(s))
+                        {
+                           response = CAOService.SUCCESSFUL_LOGIN;
+                        }else{
+                            response = CAOService.FAILED_LOGIN;
+                        }
+                        socketWriter.println(response);
+                    }catch (DaoException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
             }
             socket.close();
 

@@ -143,15 +143,11 @@ public class CAOClient
         String dob = RegexChecker.correctDOB();
         System.out.print("Password: ");
         String password = keyboard.next();
-        String message = "LOGIN" + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
+        String message = CAOService.LOGIN_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
                 dob + CAOService.BREAKING_CHARACTER + password;
-        System.out.println("Message ready for server: "+ message);
 
-        /*
-         * send Message to server on OUT
-         * read respone from Server on IN
-         * */
-        String response = CAOService.SUCCESSFUL_LOGIN; //Just To mimic Successful response
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
         if(response.equals(CAOService.SUCCESSFUL_LOGIN))
         {
             System.out.println("LOGGED IN ");
