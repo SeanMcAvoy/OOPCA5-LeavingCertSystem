@@ -3,6 +3,8 @@ package com.dkit.oopca5.client;
 /* This class should contain static methods to verify input in the application
  */
 
+import com.dkit.oopca5.core.Colours;
+
 import java.util.Scanner;
 
 public class RegexChecker
@@ -81,6 +83,35 @@ public class RegexChecker
                 System.out.println("--Date format is (yyyy-mm-dd)--");
         }while(!correctDOB);
         return DOB;
+    }
+
+    public static boolean passwordRegExpression(String password)
+    {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
+        String input = password;
+        boolean correct = input.matches(regex);
+        return correct;
+    }
+
+    public static String correctPassword()
+    {
+        String password;
+        boolean correctPassword = false;
+        //keyboard.nextLine();
+        do{
+            System.out.println("Password:");
+            password = keyboard.nextLine();
+            correctPassword = passwordRegExpression(password);
+            if(!correctPassword)//checking the date is in the right format
+            {
+                System.out.println("--Password format --");
+                System.out.println("\t"+Colours.RED+"1)Password must contain at least one digit [0-9].");
+                System.out.println("\t2)Password must contain at least one lowercase Latin character [a-z].");
+                System.out.println("\t3)Password must contain at least one uppercase Latin character [A-Z].");
+                System.out.println("\t4)Password must contain a length of at least 8 characters and a maximum of 20 characters."+Colours.RESET);
+            }
+        }while(!correctPassword);
+        return password;
     }
 
 }

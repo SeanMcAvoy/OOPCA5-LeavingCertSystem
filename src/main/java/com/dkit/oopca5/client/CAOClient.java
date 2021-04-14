@@ -112,11 +112,11 @@ public class CAOClient
 
         int caoNumber = RegexChecker.correctCAONumber();
         String dob = RegexChecker.correctDOB();
-        System.out.print("Password: ");
-        String password = keyboard.next();
+        //System.out.print("Password: ");
+        String password = RegexChecker.correctPassword();
         String message = CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
                     dob + CAOService.BREAKING_CHARACTER + password;
-        System.out.println("Message ready for server: "+ message);
+        //System.out.println("Message ready for server: "+ message);
 
         /*
         * send Message to server on OUT

@@ -3,6 +3,7 @@ package com.dkit.oopca5.core.johnloane;
 import static org.junit.Assert.assertTrue;
 
 import com.dkit.oopca5.Exceptions.DaoException;
+import com.dkit.oopca5.client.RegexChecker;
 import com.dkit.oopca5.core.Course;
 import com.dkit.oopca5.core.Student;
 import com.dkit.oopca5.server.*;
@@ -104,7 +105,8 @@ public class AppTest
         System.out.println("Login with correct Details");
         StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
         try{
-            Student s = new Student(90988872,"1998-11-29","Test");
+//            Student s = new Student(12345678,"1996-04-24","Dublin2020");
+            Student s = new Student(98763828,"2000-04-01","HelloWorld2");
             Boolean result = false;
             if(IStudentDAO.login(s)) {
                 result = true;
@@ -141,7 +143,7 @@ public class AppTest
     {
         StudentDaoInterface IStudentDAO = new MySqlStudentDAO();
         try{
-            Student s = new Student(90988872,"1998-11-29","Test");
+            Student s = new Student(11111111,"2001-11-11","Test1234");
             Boolean result = false;
             if(IStudentDAO.isRegistered(s)) {
                 result = true;
@@ -195,9 +197,26 @@ public class AppTest
         {
             e.printStackTrace();
         }
-
-
     }
+
+    @Test
+    public void passwordRegExTest()
+    {
+        String password = "Test1234";
+        Boolean result = RegexChecker.passwordRegExpression(password);
+        Boolean expResult = true;
+        Assert.assertEquals(expResult,result);
+    }
+    @Test
+    public void wrongPasswordRegExTest()
+    {
+        String password = "Test";
+        Boolean result = RegexChecker.passwordRegExpression(password);
+        Boolean expResult = false;
+        Assert.assertEquals(expResult,result);
+    }
+
+
 
 
 }
