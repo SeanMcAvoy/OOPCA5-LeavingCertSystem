@@ -116,7 +116,7 @@ public class CAOClient
         String password = keyboard.next();
         String message = CAOService.REGISTER_COMMAND + CAOService.BREAKING_CHARACTER + caoNumber + CAOService.BREAKING_CHARACTER +
                     dob + CAOService.BREAKING_CHARACTER + password;
-        //System.out.println("Message ready for server: "+ message);
+        System.out.println("Message ready for server: "+ message);
 
         /*
         * send Message to server on OUT

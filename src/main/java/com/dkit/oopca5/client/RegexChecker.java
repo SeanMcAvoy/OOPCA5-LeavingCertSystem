@@ -22,13 +22,12 @@ public class RegexChecker
         boolean correctCaoNumber = false;
         do{
             System.out.print("CAO Number: ");
-            caoNumber = keyboard.nextInt();
+            caoNumber = Validation.menuOptionValidation();
             correctCaoNumber = caoNumberRegExpression(caoNumber);
             if(!correctCaoNumber)
                 System.out.println("--CAO Number must be 8 Digits--\n");
         }while(!correctCaoNumber);
         return caoNumber;
-
     }
 
     private static boolean courseIDRegExpression(String courseID)
@@ -49,6 +48,7 @@ public class RegexChecker
             if(!correctCourseID)
                 System.out.println("--Course ID length of 5--\n");
         }while(!correctCourseID);
+
         return courseID;
     }
 
@@ -72,7 +72,7 @@ public class RegexChecker
     {
         String DOB;
         boolean correctDOB = false;
-        keyboard.nextLine();
+        //keyboard.nextLine();
         do{
             System.out.println("DOB (yyyy-mm-dd):");
             DOB = keyboard.nextLine();
