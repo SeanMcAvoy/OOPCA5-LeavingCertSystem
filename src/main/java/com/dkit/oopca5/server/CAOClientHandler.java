@@ -102,6 +102,9 @@ public class CAOClientHandler implements Runnable
                     {
                         e.printStackTrace();
                     }
+                }
+                if(components[0].equals(CAOService.DISPLAY_COURSE_COMMAND))
+                {
 
                 }
             }

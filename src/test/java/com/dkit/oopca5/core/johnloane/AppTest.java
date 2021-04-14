@@ -187,7 +187,7 @@ public class AppTest
             studentChoices.add("DN150");
             if(ICourseChoiceDAO.updateCoursesForUser(80910958,studentChoices))
             {
-                result = true;
+                result = true; //get current choice update and see if match
             }
             Boolean expResult = true;
             Assert.assertEquals(expResult,result);

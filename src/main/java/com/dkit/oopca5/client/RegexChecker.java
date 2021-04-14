@@ -19,19 +19,21 @@ public class RegexChecker
     public static int correctCAONumber()
     {
         int caoNumber;
+        boolean correctCaoNumber = false;
         do{
             System.out.print("CAO Number: ");
             caoNumber = keyboard.nextInt();
-            if(!caoNumberRegExpression(caoNumber))
+            correctCaoNumber = caoNumberRegExpression(caoNumber);
+            if(!correctCaoNumber)
                 System.out.println("--CAO Number must be 8 Digits--\n");
-        }while(!caoNumberRegExpression(caoNumber));
+        }while(!correctCaoNumber);
         return caoNumber;
 
     }
 
     private static boolean courseIDRegExpression(String courseID)
     {
-        String regex = "^[a-zA-Z0-9]{5}$";
+        String regex = "^[a-zA-Z0-9]{5}$"; //2 letters //3numbers
         String input = courseID;
         boolean courseIDOK = input.matches(regex);
         return courseIDOK;
@@ -39,12 +41,14 @@ public class RegexChecker
     public static String correctCourseID()
     {
         String courseID;
+        boolean correctCourseID = false;
         do{
             System.out.print("Course ID: ");
             courseID = keyboard.next();
-            if(!courseIDRegExpression(courseID))
+            correctCourseID = courseIDRegExpression(courseID);
+            if(!correctCourseID)
                 System.out.println("--Course ID length of 5--\n");
-        }while(!courseIDRegExpression(courseID));
+        }while(!correctCourseID);
         return courseID;
     }
 
@@ -67,13 +71,15 @@ public class RegexChecker
     public static String correctDOB()
     {
         String DOB;
+        boolean correctDOB = false;
         keyboard.nextLine();
         do{
             System.out.println("DOB (yyyy-mm-dd):");
             DOB = keyboard.nextLine();
-            if(!RegexChecker.dateRegExpression(DOB)) //checking the date is in the right format
+            correctDOB = dateRegExpression(DOB);
+            if(!correctDOB) //checking the date is in the right format
                 System.out.println("--Date format is (yyyy-mm-dd)--");
-        }while(!dateRegExpression(DOB));
+        }while(!correctDOB);
         return DOB;
     }
 

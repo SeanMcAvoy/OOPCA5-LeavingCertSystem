@@ -20,6 +20,10 @@ public class CAOService
     public static final String SUCCESSFUL_LOGIN = "LOGGED IN";
     public static final String FAILED_LOGIN = "LOGIN FAILED";
 
+    public static final String DISPLAY_COURSE_COMMAND = "DISPLAY COURSE";
+    public static final String DISPLAY_COURSE_ERROR = "DISPLAY COURSE ERROR";
+
+
 
 
     // need the to create:

@@ -8,6 +8,7 @@ package com.dkit.oopca5.client;
 
 import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Colours;
+import com.dkit.oopca5.core.Course;
 import com.sun.tools.javac.Main;
 
 import java.io.IOException;
@@ -193,13 +194,13 @@ public class CAOClient
     {
         printLoginMenu();
         LoginMenu loginOption = getLoginMenuOption();
-        while(loginOption != LoginMenu.QUIT)
+        while(loginOption != LoginMenu.LOGOUT)
         {
             switch (loginOption)
             {
-                case LOGOUT:
-                    System.out.println("Logged Out");
-                    user = 0;
+                case QUIT:
+                    System.out.println("\nGood bye");
+                    System.exit(0);
                     break;
                 case DISPLAY_COURSE:
                     displayCourse(socketWriter,socketReader);
@@ -226,18 +227,23 @@ public class CAOClient
     {
         System.out.println("Course ID of the course the course you would like to see");
         String courseID = RegexChecker.correctCourseID();
-        String message = "DISPLAY COURSE" + CAOService.BREAKING_CHARACTER + courseID;
+        String message = CAOService.DISPLAY_COURSE_COMMAND + CAOService.BREAKING_CHARACTER + courseID;
         System.out.println("Message ready for server: "+ message);
 
-//        String response = CAOService.SUCCESSFUL_REGISTER; //Just To mimic Successful response
-//        if(response.equals(CAOService.SUCCESSFUL_REGISTER))
-//        {
-//            System.out.println("Registered ");
-//        }
-//        else if(response.equals(CAOService.FAILED_REGISTER))
-//        {
-//            System.out.println("There was a problem with the registration");
-//        }
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
+        if(response.equals(CAOService.DISPLAY_COURSE_ERROR)){
+            System.out.println("No course with That ID");
+        }else{
+            Course course = new Course(null);
+            System.out.println(course);
+        }
+
+
+
+
+
+
     }
     private void displayAllCourses(PrintWriter socketWriter, Scanner socketReader)
     {
