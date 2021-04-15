@@ -6,11 +6,14 @@ The CAOClientHandler will run as a thread. It should listen for messages from th
 
 import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.CAOService;
+import com.dkit.oopca5.core.Course;
 import com.dkit.oopca5.core.Student;
 
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
@@ -105,7 +108,89 @@ public class CAOClientHandler implements Runnable
                 }
                 if(components[0].equals(CAOService.DISPLAY_COURSE_COMMAND))
                 {
+                    try{
+                        String courseID = components[1];
+                        Course c = ICourseDAO.findCourseByID(courseID);
+                        if(c != null)
+                        {
+                            response = c.getCourseId() + CAOService.BREAKING_CHARACTER + c.getLevel() +
+                                        CAOService.BREAKING_CHARACTER + c.getTitle() + CAOService.BREAKING_CHARACTER
+                                        + c.getInstitution();
+                        }else{
+                            response = CAOService.DISPLAY_COURSE_ERROR;
+                        }
+                        socketWriter.println(response);
+                    }catch (DaoException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                if(components[0].equals(CAOService.DISPLAY_ALLCOURSES_COMMAND))
+                {
+                    try{
+                        List<Course> courses = ICourseDAO.findAllCourses();
+                        if(courses.isEmpty())
+                        {
+                            response = CAOService.DISPLAY_ALLCOURSES_ERROR;
 
+                        }else{
+                            response = CAOService.SUCCESSFULL_DISPLAY_ALLCOURSES;
+                            for(Course c: courses)
+                            {
+                                response += CAOService.BREAKING_CHARACTER + c.getCourseId() + CAOService.BREAKING_CHARACTER + c.getLevel() +
+                                        CAOService.BREAKING_CHARACTER + c.getTitle() + CAOService.BREAKING_CHARACTER
+                                        + c.getInstitution();
+                            }
+                        }
+                        socketWriter.println(response);
+                    }catch (DaoException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                if(components[0].equals(CAOService.DISPLAY_CURRENT_CHOICES_COMMAND))
+                {
+                    try{
+                        int caoNumber = Integer.parseInt(components[1]);
+                        List<String> studentChoices = ICourseChoiceDAO.getUsersCoursesChoices(caoNumber);
+                        if(studentChoices.isEmpty())
+                        {
+                            response = CAOService.DISPLAY_CURRENT_CHOICES_ERROR;
+
+                        }else{
+                            response = CAOService.SUCCESSFUL_DISPLAY_CHOICES_CURRENT;
+                            for(String c: studentChoices)
+                            {
+                                response += CAOService.BREAKING_CHARACTER + c;
+                            }
+                        }
+                        socketWriter.println(response);
+                    }catch (DaoException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                if(components[0].equals(CAOService.UPDATE_CURRENT_CHOICES_COMMAND))
+                {
+                    int caoNumber = Integer.parseInt(components[1]);
+                    List<String>studentChoices = new ArrayList<>();
+                    for(int i = 2; i<components.length; i++)
+                    {
+                        studentChoices.add(components[i]);
+                    }
+                    try{
+                        if(ICourseChoiceDAO.updateCoursesForUser(caoNumber,studentChoices))
+                        {
+                            response = CAOService.SUCCESSFUL_UPDATE_CHOICES_CURRENT;
+
+                        }else{
+                            response = CAOService.UPDATE_CURRENT_CHOICES_ERROR;
+                        }
+                        socketWriter.println(response);
+                    }catch (DaoException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
             socket.close();

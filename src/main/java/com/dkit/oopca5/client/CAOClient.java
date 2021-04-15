@@ -228,15 +228,21 @@ public class CAOClient
         System.out.println("Course ID of the course the course you would like to see");
         String courseID = RegexChecker.correctCourseID();
         String message = CAOService.DISPLAY_COURSE_COMMAND + CAOService.BREAKING_CHARACTER + courseID;
-        System.out.println("Message ready for server: "+ message);
+        //System.out.println("Message ready for server: "+ message);
 
         socketWriter.println(message);
         String response = socketReader.nextLine();
         if(response.equals(CAOService.DISPLAY_COURSE_ERROR)){
             System.out.println("No course with That ID");
         }else{
-            Course course = new Course(null);
-            System.out.println(course);
+            System.out.println(response);
+            String[] components = message.split(CAOService.BREAKING_CHARACTER);
+            courseID = components[0];
+            String level = components[1];
+            String courseTitle = components[2];
+            String college = components[4];
+            Course c = new Course(courseID,level,courseTitle,college);
+            System.out.println(c);
         }
 
 
@@ -247,13 +253,70 @@ public class CAOClient
     }
     private void displayAllCourses(PrintWriter socketWriter, Scanner socketReader)
     {
-        String message = "DISPLAY ALL";
-        System.out.println("Message ready for server: "+ message);
+        String message = CAOService.DISPLAY_ALLCOURSES_COMMAND;
+        //System.out.println("Message ready for server: "+ message);
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
+        String[] components = response.split(CAOService.BREAKING_CHARACTER);
+        if(components[0].equals(CAOService.DISPLAY_COURSE_ERROR))
+        {
+            System.out.println("There is No Courses");
+        }
+        else if(components[0].equals(CAOService.SUCCESSFULL_DISPLAY_ALLCOURSES))
+        {
+            List<Course> courses = new ArrayList<>();
+            int count = 0;
+            String courseID="",level ="",courseTitle ="",college ="";
+            for(int i = 1; i< components.length; i++)
+            {
+                if(count == 0)
+                {
+                    courseID = components[i];
+                    count++;
+                }
+                else if(count == 1)
+                {
+                    level = components[i];
+                }
+                else if(count == 2)
+                {
+                    courseTitle = components[i];
+                }
+                else if(count == 3)
+                {
+                    college = components[i];
+                }
+                else if(count == 4)
+                {
+                    count = 0;
+                    Course c = new Course(courseID,level,courseTitle,college);
+                    courses.add(c);
+                }
+                if(count != 0)
+                    count++;
+            }
+            displayAllCourses(courses);
+        }
+
     }
     private void displayCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
     {
-        String message = "DISPLAY CURRENT" + CAOService.BREAKING_CHARACTER + user;
-        System.out.println("Message ready for server: "+ message);
+        String message = CAOService.DISPLAY_CURRENT_CHOICES_COMMAND + CAOService.BREAKING_CHARACTER + user;
+        //System.out.println("Message ready for server: "+ message);
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
+        String[] components = response.split(CAOService.BREAKING_CHARACTER);
+        if(components[0].equals(CAOService.SUCCESSFUL_DISPLAY_CHOICES_CURRENT))
+        {
+            System.out.println("Your Choices are:");
+            for(int i = 1; i<components.length; i++)
+            {
+                System.out.println(i+")"+components[i]);
+            }
+        }else if(components[0].equals(CAOService.DISPLAY_CURRENT_CHOICES_ERROR))
+        {
+            System.out.println("User has no Choices picked");
+        }
     }
 
     private void updateCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
@@ -268,12 +331,36 @@ public class CAOClient
             System.out.println("Do you wish to enter another?");
             notFinished = Validation.yesNoValidation();
         }
-        String message = "UPDATE CURRENT"+ CAOService.BREAKING_CHARACTER + user;
+        String message = CAOService.UPDATE_CURRENT_CHOICES_COMMAND + CAOService.BREAKING_CHARACTER + user;
         for (String c : choices)
         {
             message += CAOService.BREAKING_CHARACTER + c;
         }
-        System.out.println("Message ready for server: "+ message);
+        //System.out.println("Message ready for server: "+ message);
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
+        String[] components = response.split(CAOService.BREAKING_CHARACTER);
+        if(components[0].equals(CAOService.SUCCESSFUL_UPDATE_CHOICES_CURRENT))
+        {
+            System.out.println("Choices Updated");
+        }
+        else if(components[0].equals(CAOService.UPDATE_CURRENT_CHOICES_ERROR)){
+            System.out.println("Error occurred");
+        }
+    }
+    private static void displayAllCourses(List<Course> courses)
+    {
+        String format = "%-10s%-8s %-50s%-30s\n";
+        System.out.printf(format,"CourseID","Level","Title","Institute");
+        for(Course c : courses)
+            System.out.printf(format,c.getCourseId(),c.getLevel(),c.getTitle(),c.getInstitution());
+        System.out.println();
+    }
+    private static void displayCourse(Course c)
+    {
+        System.out.println("Course Info:");
+        System.out.println("CourseID:'"+c.getCourseId()+"', Level:'"+c.getLevel()+"', Title:'"+c.getTitle()+"', Institute:'"+c.getInstitution()+"'");
+        System.out.println();
     }
 
 

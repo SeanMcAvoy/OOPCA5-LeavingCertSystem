@@ -25,7 +25,7 @@ public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterf
             //Get connection object using the methods in the super class (MySqlDao.java)...
             con = this.getConnection();
 
-            String query = "SELECT * FROM student_courses WHERE caoNumber = ?";
+            String query = "SELECT * FROM student_courses WHERE caoNumber = ? ORDER BY `student_courses`.`preference` ASC";
             ps = con.prepareStatement(query);
             ps.setInt(1, caoNumber);
             //Using a PreparedStatement to execute SQL...
