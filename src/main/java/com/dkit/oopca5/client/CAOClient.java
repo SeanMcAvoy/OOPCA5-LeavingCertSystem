@@ -1,4 +1,6 @@
 package com.dkit.oopca5.client;
+//Name: Sean McAvoy
+//Student Number: D00233349
 
 /* The client package should contain all code and classes needed to run the Client
  */
@@ -244,13 +246,8 @@ public class CAOClient
             Course c = new Course(courseID,level,courseTitle,college);
             System.out.println(c);
         }
-
-
-
-
-
-
     }
+
     private void displayAllCourses(PrintWriter socketWriter, Scanner socketReader)
     {
         String message = CAOService.DISPLAY_ALLCOURSES_COMMAND;
@@ -319,6 +316,18 @@ public class CAOClient
         }
     }
 
+    private boolean courseidIsInDatabase(String courseID,PrintWriter socketWriter, Scanner socketReader)
+    {
+        boolean courseInDatabase = true;
+        String message = CAOService.DISPLAY_COURSE_COMMAND + CAOService.BREAKING_CHARACTER + courseID;
+        socketWriter.println(message);
+        String response = socketReader.nextLine();
+        if(response.equals(CAOService.DISPLAY_COURSE_ERROR)) {
+            courseInDatabase = false;
+        }
+        return courseInDatabase;
+    }
+
     private void updateCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         List<String> choices = new ArrayList<>();
@@ -327,8 +336,14 @@ public class CAOClient
         while(notFinished)
         {
             String courseID = RegexChecker.correctCourseID();
-            choices.add(courseID);
-            System.out.println("Do you wish to enter another?");
+            if(courseidIsInDatabase(courseID,socketWriter,socketReader))
+            {
+                choices.add(courseID);
+            }
+            else{
+                System.out.println("Course ID is not valid");
+            }
+            System.out.println("Do you wish to enter another? (Yes/No)");
             notFinished = Validation.yesNoValidation();
         }
         String message = CAOService.UPDATE_CURRENT_CHOICES_COMMAND + CAOService.BREAKING_CHARACTER + user;

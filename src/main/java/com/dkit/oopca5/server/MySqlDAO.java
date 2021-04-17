@@ -7,7 +7,8 @@ import com.dkit.oopca5.Exceptions.DaoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 
 public class MySqlDAO
 {

@@ -1,5 +1,6 @@
 package com.dkit.oopca5.core;
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 //course DTO
 public class Course
 {

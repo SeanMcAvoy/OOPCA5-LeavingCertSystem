@@ -2,7 +2,8 @@ package com.dkit.oopca5.client;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 public class Validation
 {
     public static int menuOptionValidation()

@@ -1,5 +1,6 @@
 package com.dkit.oopca5.core;
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 public class Student
 {
     private int caoNumber;  // In the CAO system, cao number is unique identifier for student

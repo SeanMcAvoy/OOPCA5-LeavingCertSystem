@@ -1,5 +1,8 @@
 package com.dkit.oopca5.client;
 
+//Name: Sean McAvoy
+//Student Number: D00233349
+
 /* This class should contain static methods to verify input in the application
  */
 
@@ -34,7 +37,7 @@ public class RegexChecker
 
     private static boolean courseIDRegExpression(String courseID)
     {
-        String regex = "^[a-zA-Z0-9]{5}$"; //2 letters //3numbers
+        String regex = "[a-zA-Z]{2}\\d{3}"; //2 letters //3numbers
         String input = courseID;
         boolean courseIDOK = input.matches(regex);
         return courseIDOK;
@@ -48,7 +51,7 @@ public class RegexChecker
             courseID = keyboard.next();
             correctCourseID = courseIDRegExpression(courseID);
             if(!correctCourseID)
-                System.out.println("--Course ID length of 5--\n");
+                System.out.println("--Course ID length of 5 (Two letters followed by 3 numbers)--\n");
         }while(!correctCourseID);
 
         return courseID;
@@ -77,7 +80,7 @@ public class RegexChecker
         //keyboard.nextLine();
         do{
             System.out.println("DOB (yyyy-mm-dd):");
-            DOB = keyboard.nextLine();
+            DOB = keyboard.next();
             correctDOB = dateRegExpression(DOB);
             if(!correctDOB) //checking the date is in the right format
                 System.out.println("--Date format is (yyyy-mm-dd)--");
@@ -100,7 +103,7 @@ public class RegexChecker
         //keyboard.nextLine();
         do{
             System.out.println("Password:");
-            password = keyboard.nextLine();
+            password = keyboard.next();
             correctPassword = passwordRegExpression(password);
             if(!correctPassword)//checking the date is in the right format
             {

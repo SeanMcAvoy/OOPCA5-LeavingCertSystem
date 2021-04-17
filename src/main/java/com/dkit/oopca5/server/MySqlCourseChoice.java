@@ -3,6 +3,9 @@ package com.dkit.oopca5.server;
 import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.Course;
 
+//Name: Sean McAvoy
+//Student Number: D00233349
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +73,7 @@ public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterf
         PreparedStatement ps1 = null;
         ResultSet rs = null;
         boolean completed = false;
+        boolean error = false;
         int countOfRowsAffected = 0;
         int i = 0;
 
@@ -81,26 +85,27 @@ public class MySqlCourseChoice extends MySqlDAO implements CourseChoiceDaoInterf
             ps1.executeUpdate();
             while(i < courses.size())
             {
+                completed = false;
                 String query = "INSERT INTO `student_courses` VALUES (?,?,?)";
                 ps = con.prepareStatement(query);
 
                 ps.setInt(1, caoNumber);
                 ps.setString(2, courses.get(i));
                 ps.setInt(3, i+1);
-                ps.executeUpdate();
+                if(ps.executeUpdate()>0)
+                {
+                    completed = true;
+                }
                 i++;
-            }
-            if(i == courses.size())
-            {
-                completed = true;
             }
         } catch (SQLException e) {
             throw new DaoException("updateCoursesForUser()" + e.getMessage());
-        } finally {
+        }
+        finally {
             try {
-                if (countOfRowsAffected > 0) {
-                    completed = true;
-                }
+//                if (countOfRowsAffected >= courses.size()) {
+//                    completed = true;
+//                }
                 if (rs != null) {
                     rs.close();
                 }

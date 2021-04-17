@@ -3,7 +3,8 @@ package com.dkit.oopca5.server;
 /*
 The CAOClientHandler will run as a thread. It should listen for messages from the Client and respond to them.There should be one CAOClientHandler per Client.
  */
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.CAOService;
 import com.dkit.oopca5.core.Course;

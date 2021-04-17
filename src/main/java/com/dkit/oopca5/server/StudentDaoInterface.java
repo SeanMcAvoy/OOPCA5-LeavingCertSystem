@@ -2,7 +2,8 @@ package com.dkit.oopca5.server;
 
 import com.dkit.oopca5.Exceptions.DaoException;
 import com.dkit.oopca5.core.Student;
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 public interface StudentDaoInterface
 {
     public boolean registerStudent(Student s) throws DaoException;

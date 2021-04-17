@@ -3,7 +3,8 @@ package com.dkit.oopca5.core;
 /*The core package should contain all of the classes
   that are shared between the Client and Server
  */
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 public class Colours
 {
     public static final String RESET = "\u001B[0m";

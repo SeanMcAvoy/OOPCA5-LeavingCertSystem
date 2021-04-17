@@ -9,7 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+//Name: Sean McAvoy
+//Student Number: D00233349
 public class MySqlCourseDAO extends MySqlDAO implements CourseDaoInterface
 {
     @Override
