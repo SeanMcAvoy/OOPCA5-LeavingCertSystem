@@ -10,10 +10,20 @@ import com.dkit.oopca5.core.Colours;
 
 import java.util.Scanner;
 
+/**
+ * All Reg Ex validation
+ */
 public class RegexChecker
 {
     private  static Scanner keyboard = new Scanner(System.in);
 
+    /**
+     * caoNumberRegExpression()
+     * makes sure CAO number is 8 digits
+     * @param caoNumber of the student
+     * @return true if CAO number is 8 Digits
+     * @return false if CAO number isnt 8 Digits
+     */
     private static boolean caoNumberRegExpression(int caoNumber)
     {
         String regex = "\\d{8}";
@@ -21,6 +31,12 @@ public class RegexChecker
         boolean caoNumberOK = input.matches(regex);
         return caoNumberOK;
     }
+
+    /**
+     * correctCAONumber()
+     * gets the user to type in the CAO number and validates it
+     * @return the caoNumber when its valid
+     */
     public static int correctCAONumber()
     {
         int caoNumber;
@@ -35,6 +51,12 @@ public class RegexChecker
         return caoNumber;
     }
 
+    /**
+     * courseIDRegExpression(String courseID)
+     * make sure all courseID are 2 letter and 3 Digits
+     * @param courseID the id of the course
+     * @return true / false depending if the ID is correct or not
+     */
     private static boolean courseIDRegExpression(String courseID)
     {
         String regex = "[a-zA-Z]{2}\\d{3}"; //2 letters //3numbers
@@ -42,6 +64,12 @@ public class RegexChecker
         boolean courseIDOK = input.matches(regex);
         return courseIDOK;
     }
+
+    /**
+     * correctCourseID()
+     * will ask the user for courseID input and validate it
+     * @return the courseID when its valid
+     */
     public static String correctCourseID()
     {
         String courseID;
@@ -57,14 +85,20 @@ public class RegexChecker
         return courseID;
     }
 
-    private static boolean courseLevelRegExpression(String courseLevel)
-    {
-        String regex = "^[7-9]{1}||[0-1]{2}$";
-        String input = courseLevel;
-        boolean correct = input.matches(regex);
-        return correct;
-    }
+//    private static boolean courseLevelRegExpression(String courseLevel)
+//    {
+//        String regex = "^[7-9]{1}||[0-1]{2}$";
+//        String input = courseLevel;
+//        boolean correct = input.matches(regex);
+//        return correct;
+//    }
 
+    /**
+     * dateRegExpression(String date)
+     * Ask user to type in the date and will validate it
+     * @param date date in format of yyyy-mm-dd
+     * @return the date when its valid
+     */
     private static boolean dateRegExpression(String date)
     {
         String regex = "^\\d{4}-\\d{2}-\\d{2}$";
@@ -73,6 +107,11 @@ public class RegexChecker
         return correct;
     }
 
+    /**
+     * correctDOB()
+     * will make sure the date format is correct
+     * @return the date when valid format
+     */
     public static String correctDOB()
     {
         String DOB;
@@ -88,6 +127,12 @@ public class RegexChecker
         return DOB;
     }
 
+    /**
+     * passwordRegExpression(String password)
+     * validates password is strong enough
+     * @param password users password
+     * @return password when meets all the requirements
+     */
     public static boolean passwordRegExpression(String password)
     {
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
@@ -96,6 +141,11 @@ public class RegexChecker
         return correct;
     }
 
+    /**
+     * correctPassword()
+     * ask user to type in the password and will continue to ask till valid
+     * @return valid Password
+     */
     public static String correctPassword()
     {
         String password;

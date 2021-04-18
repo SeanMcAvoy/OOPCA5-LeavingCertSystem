@@ -6,6 +6,11 @@ import java.util.Scanner;
 //Student Number: D00233349
 public class Validation
 {
+    /**
+     * menuOptionValidation()
+     * validates an int is being typed in and will catch any letters or anything etc
+     * @return the int
+     */
     public static int menuOptionValidation()
     {
         int option = -1; //users choice so will repeat again as 0 quits application
@@ -29,6 +34,12 @@ public class Validation
         return option;
     }
 
+    /**
+     * yesNoValidation()
+     * ckect if user types in yes or no
+     * @return true if user types yes
+     * @return False if user types no
+     */
     public static Boolean yesNoValidation()
     {
         Boolean answer = null;

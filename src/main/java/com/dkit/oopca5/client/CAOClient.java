@@ -59,6 +59,12 @@ public class CAOClient
 
     }
 
+    /**
+     * doMainMenuLoop()
+     * Does the mainManu in a loop so wont top till user quits
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void doMainMenuLoop(PrintWriter socketWriter, Scanner socketReader)
     {
         printMainMenu();
@@ -80,6 +86,10 @@ public class CAOClient
             menuOption = getMainMenuOption();
         }
     }
+
+    /**
+     * Prints main menu
+     */
     private void printMainMenu()
     {
         for(int i=0; i<MainMenu.values().length; i++)
@@ -89,6 +99,11 @@ public class CAOClient
         System.out.println("Enter a number to select option (0 to cancel):");
 
     }
+
+    /**
+     * getMainManuOption()
+     * @return mainMenu option as enum
+     */
     private MainMenu getMainMenuOption()
     {
         MainMenu menuOption = null;
@@ -108,6 +123,13 @@ public class CAOClient
 
         return menuOption;
     }
+
+    /**
+     *register()
+     * registers user to the database
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void register(PrintWriter socketWriter, Scanner socketReader)
     {
         System.out.println("In order to Register to CAO we need your CAO number, Date of Birth and Password");
@@ -140,6 +162,12 @@ public class CAOClient
         }
     }
 
+    /**
+     *login()
+     * Allows user to login into the system if details match Database
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void login(PrintWriter socketWriter, Scanner socketReader)
     {
         int caoNumber = RegexChecker.correctCAONumber();
@@ -162,6 +190,9 @@ public class CAOClient
         }
     }
 
+    /**
+     * Print login Menu
+     */
     private void printLoginMenu()
     {
         for (int i = 0; i < LoginMenu.values().length; i++)
@@ -171,6 +202,10 @@ public class CAOClient
         System.out.println("Enter a number to select option:");
     }
 
+    /**
+     * getLoginMenuOption()
+     * @return loginMenu option as enum
+     */
     private LoginMenu getLoginMenuOption()
     {
         LoginMenu menuOption = null;
@@ -192,6 +227,13 @@ public class CAOClient
 
     }
 
+    /**
+     * doLoginMenu()
+     * does the login menu options
+     * @param user - CAO number
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void doLoginMenu(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         printLoginMenu();
@@ -225,6 +267,13 @@ public class CAOClient
             loginOption = getLoginMenuOption();
         }
     }
+
+    /**
+     *displayCourse()
+     * display a certain course by ID
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void displayCourse(PrintWriter socketWriter, Scanner socketReader)
     {
         System.out.println("Course ID of the course the course you would like to see");
@@ -248,6 +297,12 @@ public class CAOClient
         }
     }
 
+    /**
+     *displayAllCourse()
+     * display all courses on the datebase
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void displayAllCourses(PrintWriter socketWriter, Scanner socketReader)
     {
         String message = CAOService.DISPLAY_ALLCOURSES_COMMAND;
@@ -296,6 +351,13 @@ public class CAOClient
         }
 
     }
+
+    /**
+     * Display all the users current choices
+     * @param user - caoNumber
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void displayCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         String message = CAOService.DISPLAY_CURRENT_CHOICES_COMMAND + CAOService.BREAKING_CHARACTER + user;
@@ -316,6 +378,14 @@ public class CAOClient
         }
     }
 
+    /**
+     * Return if the course is valid and is in the database or not
+     * @param courseID - id of the course
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     * @return true - Database has a record of a course with that ID
+     * @return false - Database has no record of the course
+     */
     private boolean courseidIsInDatabase(String courseID,PrintWriter socketWriter, Scanner socketReader)
     {
         boolean courseInDatabase = true;
@@ -328,6 +398,12 @@ public class CAOClient
         return courseInDatabase;
     }
 
+    /**
+     * Updates current choices by sending the Course idS to the sever to add to this users account
+     * @param user - caoNumber
+     * @param socketWriter - to write to server
+     * @param socketReader - to read the server response
+     */
     private void updateCurrentChoices(int user,PrintWriter socketWriter, Scanner socketReader)
     {
         List<String> choices = new ArrayList<>();
@@ -363,6 +439,11 @@ public class CAOClient
             System.out.println("Error occurred");
         }
     }
+
+    /**
+     * Displays the courses tidy in table format
+     * @param courses list of course
+     */
     private static void displayAllCourses(List<Course> courses)
     {
         String format = "%-10s%-8s %-50s%-30s\n";

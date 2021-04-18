@@ -12,6 +12,12 @@ import java.sql.SQLException;
 
 public class MySqlDAO
 {
+    /**
+     * getConnection()
+     * connects to the local server MySQL database
+     * @return
+     * @throws DaoException
+     */
     public Connection getConnection() throws DaoException
     {
         String driver = "com.mysql.cj.jdbc.Driver";
@@ -46,6 +52,11 @@ public class MySqlDAO
         return con;
     }
 
+    /**
+     *
+     * @param con Connection
+     * @throws DaoException
+     */
     public void freeConnection(Connection con) throws DaoException
     {
         try
